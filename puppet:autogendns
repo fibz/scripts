@@ -1,0 +1,13 @@
+n your manifest,
+
+class named::config {
+ $utime_serial = inline_template("<%= Time.now.to_i %>")
+ $domain = "yourdomain.com" # or you use a hiera lookup like so
+ # $domain = hiera("domain")
+ file { "/var/named/$domain.hosts":
+  content => template("named/$domain.hosts.erb"),
+  owner => root,
+  group => named,
+  mode => 0640,
+ }
+}
